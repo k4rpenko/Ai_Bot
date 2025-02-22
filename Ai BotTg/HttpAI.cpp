@@ -1,11 +1,20 @@
 #include "HttpAI.h"
 
 string HttpAI::SendMessageAi(const string& message) {
-    string host = "generativelanguage.googleapis.com";
-    string target = "/v1beta/models/gemini-1.5-flash:generateContent?key=AIzaSyBdtZcBtxFh-8SAMB1CvGZiwuFesYSnOBw";
-    string port = "443";
-
+    ifstream inputFILE("./appsettings.json");
+    if (!inputFILE.is_open()) {
+        cerr << "Can't open the appsettings.json" << endl;
+        return "No response from AI.";
+    }
     try {
+        json config;
+        inputFILE >> config;
+        string apiKey = config["Token"]["Value"];
+        string host = "generativelanguage.googleapis.com";
+        string target = "/v1beta/models/gemini-1.5-flash:generateContent?key=" + apiKey;
+        string port = "443";
+
+
         asio::io_context ioc;
         ssl::context ctx(ssl::context::tlsv12_client);
         ctx.set_default_verify_paths();

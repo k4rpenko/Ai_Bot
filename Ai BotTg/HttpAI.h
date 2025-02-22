@@ -3,6 +3,7 @@
 #include <boost/beast.hpp>
 #include <boost/beast/ssl.hpp>
 #include <nlohmann/json.hpp>
+#include <fstream>
 #include <iostream>
 #include <cstdlib>
 
